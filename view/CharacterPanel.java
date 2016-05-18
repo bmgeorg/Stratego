@@ -20,7 +20,7 @@ public class CharacterPanel extends JPanel {
 
 	CharacterPanel() {
 		String src = "src/images/";
-		images[0][0] = new ImageIcon(src + "marshall.png");
+		images[0][0] = new ImageIcon(src + "marshal.png");
 		images[0][1] = new ImageIcon(src + "general.png");
 		images[1][0] = new ImageIcon(src + "colonel.png");
 		images[1][1] = new ImageIcon(src + "major.png");
@@ -59,13 +59,6 @@ public class CharacterPanel extends JPanel {
 		counts[5][0] = 6;
 		counts[5][1] = 1;
 		
-		/*
-		Dimension size = new Dimension(400, 800);
-		this.setSize(size);
-		this.setPreferredSize(size);
-		this.setMinimumSize(size);
-		this.setMaximumSize(size);
-		*/
 		setLayout(new GridLayout(6, 2));
 		
 		for(int i = 0; i < 6; i++) {
@@ -77,7 +70,10 @@ public class CharacterPanel extends JPanel {
 				JLabel count = new JLabel(String.valueOf(counts[i][j]));
 				box.add(count);
 				add(box);
+				
+				//box.addmouse
 			}
 		}
+		
 	}
 }
