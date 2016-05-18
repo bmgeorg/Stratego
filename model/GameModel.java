@@ -107,4 +107,39 @@ public class GameModel {
 		turn = false;
 		return true;
 	}
+	// Checks if the local player has any valid moves
+	boolean CanMove() {
+		for(int row = 0; row < 10; row++) {
+			for (int col = 0; col < 10; col++) {
+				if(board[row][col] != null) {
+					if(board[row][col].getType() != Type.LAKE && 
+							board[row][col].getType() != Type.FLAG && 
+							board[row][col].getType() != Type.BOMB &&
+							board[row][col].getColor() == color) {
+						if(row + 1 < 10 && (board[row + 1][col] == null || 
+								(board[row + 1][col].getType() != Type.LAKE &&
+								board[row + 1][col].getColor() != color))) {
+							return true;
+						}
+						if(col + 1 < 10 && (board[row][col + 1] == null || 
+								(board[row][col + 1].getType() != Type.LAKE &&
+								board[row][col + 1].getColor() != color))) {
+							return true;
+						}
+						if(row - 1 >= 0 && (board[row - 1][col] == null || 
+								(board[row - 1][col].getType() != Type.LAKE &&
+								board[row - 1][col].getColor() != color))) {
+							return true;
+						}
+						if(col - 1 >= 0 && (board[row][col - 1] == null || 
+								(board[row][col - 1].getType() != Type.LAKE &&
+								board[row][col - 1].getColor() != color))) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
 }
