@@ -14,7 +14,6 @@ public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	MainFrame() {
-		// Put everything inside box
 		Box box = new Box(BoxLayout.Y_AXIS);
 		box.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
@@ -32,13 +31,21 @@ public class MainFrame extends JFrame {
 		box.add(waitButton);
 		box.add(Box.createRigidArea(separatorSize));
 
-		// Need access to this for opponent finder dialog ctor
+		// Need access to this for dialog ctors
 		final MainFrame mainFrame = this;
+		
 		findButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) { 
-				OpponentFinderDialog finder = new OpponentFinderDialog(mainFrame);
+				FindOpponent finder = new FindOpponent(mainFrame);
 				finder.setVisible(true);
+			} 
+		});
+		waitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) { 
+				WaitForOpponent waiter = new WaitForOpponent(mainFrame);
+				waiter.setVisible(true);
 			} 
 		});
 

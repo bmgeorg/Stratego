@@ -13,10 +13,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class OpponentFinderDialog extends JDialog {
+public class FindOpponent extends JDialog {
 	private static final long serialVersionUID = 1L;
 
-	OpponentFinderDialog(JFrame parent) {
+	FindOpponent(JFrame parent) {
 		super(parent, true);
 
 		Box box = new Box(BoxLayout.Y_AXIS);
