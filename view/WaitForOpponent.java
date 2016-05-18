@@ -3,9 +3,11 @@ package view;
 import java.awt.Dimension;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -14,6 +16,7 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.SwingWorker;
 
 public class WaitForOpponent extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -65,19 +68,31 @@ public class WaitForOpponent extends JDialog {
 		this.add(box);
 		this.pack();
 
-		Thread connectThread = new Thread(new Runnable() {
+		// Need access to this in SwingWorker
+		JDialog dialog = this;
+		SwingWorker<Socket, Void> worker = new SwingWorker<Socket, Void>() {
 			@Override
-			public void run() {
-				try {
-					final int PORT = 4005;
-					ServerSocket serverSocket = new ServerSocket(PORT);
-					Socket clientSocket = serverSocket.accept();
-					System.out.println("Connected");
+			public Socket doInBackground() {
+				final int PORT = 4005;
+				Socket socket = null;
+				try(ServerSocket serverSocket = new ServerSocket(PORT)) {
+					socket = serverSocket.accept();
 				} catch (IOException e) {
-					System.out.println("Failed");		
+					e.printStackTrace();
+				}
+				return socket;
+			}
+
+			@Override
+			public void done() {
+				Socket socket = null;
+				try {
+					socket = get();
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
 				}
 			}
-		});
-		connectThread.start();
+		};
+		worker.execute();
 	}
 }

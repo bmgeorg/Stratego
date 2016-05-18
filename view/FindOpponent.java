@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -16,6 +17,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingWorker;
 
 public class FindOpponent extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -59,7 +61,7 @@ public class FindOpponent extends JDialog {
 		box.add(Box.createRigidArea(separatorSize));
 		box.add(infoBox);
 		box.add(Box.createRigidArea(separatorSize));
-		
+
 		this.setResizable(false);
 		this.add(box);
 		this.pack();
@@ -84,28 +86,45 @@ public class FindOpponent extends JDialog {
 		box.validate();
 		this.pack();
 
-		Thread connectThread = new Thread(new Runnable() {
+		// Need access to this in SwingWorker
+		JDialog dialog = this;
+		SwingWorker<Socket, Void> worker = new SwingWorker<Socket, Void>() {
 			@Override
-			public void run() {
+			public Socket doInBackground() {
+				Socket socket = new Socket();
+				final int PORT = 4005;
+				final int TIMEOUT = 5000; // ms
 				try {
-					Socket socket = new Socket();
-					final int PORT = 4005;
-					// Timeout in milliseconds
-					final int TIMEOUT = 5000;
-					socket.connect(new InetSocketAddress(ipAddress, PORT), TIMEOUT); 
-					System.out.println("Connected");
+					socket.connect(new InetSocketAddress(ipAddress, PORT), TIMEOUT);
+					return socket;
 				} catch (IOException e) {
-					System.out.println("Failed");		
+					return null;
+				} 
+			}
+
+			@Override
+			public void done() {
+				Socket socket = null;
+				try {
+					socket = get();
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
+				}
+				if(socket == null) {
+					// Failed connection
+					infoBox.remove(waitingLabel);
+					infoBox.add(connectionFailedLabel);
+					box.validate();
+					dialog.pack();
+				} else {
+					// Successful connection
+					infoBox.remove(waitingLabel);
+					infoBox.remove(connectionFailedLabel);
+					box.validate();
+					dialog.pack();
 				}
 			}
-		});
-		connectThread.start();
-		
-		/*
-		infoBox.remove(waitingLabel);
-		infoBox.add(connectionFailedLabel);
-		box.validate();
-		this.pack();
-		*/
+		};
+		worker.execute();
 	}
 }
