@@ -1,0 +1,6 @@
+package model;
+
+public enum Type {
+	LAKE, FLAG, SPY, SCOUT, MINER, SERGEANT, LIEUTENANT, 
+	CAPTAIN, MAJOR, COLONEL, GENERAL, MARSHAL, BOMB;
+}
