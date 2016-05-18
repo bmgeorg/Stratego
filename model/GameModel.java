@@ -140,6 +140,7 @@ public class GameModel {
 				}
 			}
 		}
+		gameOver = true;
 		return false;
 	}
 }
