@@ -9,13 +9,18 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 public class MainFrame extends JFrame implements OpponentFinderDelegate {
 	private static final long serialVersionUID = 1L;
 	
+	private JDialog finderDialog = null;
+	
 	public void foundOpponent(Socket socket) {
 		System.out.println("Found oppponent: " + socket.toString());
+		finderDialog.setVisible(false);
+		finderDialog.dispose();
 	}
 
 	MainFrame() {
@@ -46,15 +51,15 @@ public class MainFrame extends JFrame implements OpponentFinderDelegate {
 		findButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) { 
-				FindOpponent finder = new FindOpponent(mainFrame, mainFrame);
-				finder.setVisible(true);
+				finderDialog = new FindOpponent(mainFrame, mainFrame);
+				finderDialog.setVisible(true);
 			} 
 		});
 		waitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) { 
-				WaitForOpponent waiter = new WaitForOpponent(mainFrame, mainFrame);
-				waiter.setVisible(true);
+				finderDialog = new WaitForOpponent(mainFrame, mainFrame);
+				finderDialog.setVisible(true);
 			} 
 		});
 	}
