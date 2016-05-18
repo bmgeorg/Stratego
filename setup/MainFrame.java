@@ -12,6 +12,8 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
+import view.Board;
+
 public class MainFrame extends JFrame implements OpponentFinderDelegate {
 	private static final long serialVersionUID = 1L;
 	
@@ -21,6 +23,10 @@ public class MainFrame extends JFrame implements OpponentFinderDelegate {
 		System.out.println("Found oppponent: " + socket.toString());
 		finderDialog.setVisible(false);
 		finderDialog.dispose();
+		
+		Board board = new Board();
+		board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		board.setVisible(true);
 	}
 
 	MainFrame() {

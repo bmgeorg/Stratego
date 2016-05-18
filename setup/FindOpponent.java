@@ -46,7 +46,7 @@ public class FindOpponent extends JDialog {
 
 		infoBox = new Box(BoxLayout.Y_AXIS);
 
-		ImageIcon waitingIcon = new ImageIcon("src/loading.gif");
+		ImageIcon waitingIcon = new ImageIcon("src/images/loading.gif");
 		waitingLabel= new JLabel(waitingIcon);
 		waitingLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 

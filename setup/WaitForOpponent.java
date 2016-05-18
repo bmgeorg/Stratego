@@ -51,7 +51,7 @@ public class WaitForOpponent extends JDialog {
 		ipLabel2.setMaximumSize(new Dimension(maxWidth, ipLabel2.getPreferredSize().height));
 		ipLabel2.setToolTipText(ipAddress);
 
-		ImageIcon waitingIcon = new ImageIcon("src/loading.gif");
+		ImageIcon waitingIcon = new ImageIcon("src/images/loading.gif");
 		JLabel waitingLabel = new JLabel(waitingIcon);
 
 		waitingLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
