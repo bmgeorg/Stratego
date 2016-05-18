@@ -3,6 +3,7 @@ package view;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.Socket;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -10,8 +11,12 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements OpponentFinderDelegate {
 	private static final long serialVersionUID = 1L;
+	
+	public void foundOpponent(Socket socket) {
+		System.out.println("Found oppponent: " + socket.toString());
+	}
 
 	MainFrame() {
 		Box box = new Box(BoxLayout.Y_AXIS);
@@ -41,14 +46,14 @@ public class MainFrame extends JFrame {
 		findButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) { 
-				FindOpponent finder = new FindOpponent(mainFrame);
+				FindOpponent finder = new FindOpponent(mainFrame, mainFrame);
 				finder.setVisible(true);
 			} 
 		});
 		waitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) { 
-				WaitForOpponent waiter = new WaitForOpponent(mainFrame);
+				WaitForOpponent waiter = new WaitForOpponent(mainFrame, mainFrame);
 				waiter.setVisible(true);
 			} 
 		});

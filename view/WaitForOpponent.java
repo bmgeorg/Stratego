@@ -3,7 +3,6 @@ package view;
 import java.awt.Dimension;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -20,6 +19,8 @@ import javax.swing.SwingWorker;
 
 public class WaitForOpponent extends JDialog {
 	private static final long serialVersionUID = 1L;
+	
+	private OpponentFinderDelegate delegate;
 
 	private String getIpAddress() {
 		String ipAddress;
@@ -31,8 +32,9 @@ public class WaitForOpponent extends JDialog {
 		return ipAddress;
 	}
 
-	WaitForOpponent(JFrame parent) {
+	WaitForOpponent(JFrame parent, OpponentFinderDelegate delegate) {
 		super(parent, true);
+		this.delegate = delegate;
 
 		Box box = new Box(BoxLayout.Y_AXIS);
 
@@ -68,8 +70,6 @@ public class WaitForOpponent extends JDialog {
 		this.add(box);
 		this.pack();
 
-		// Need access to this in SwingWorker
-		JDialog dialog = this;
 		SwingWorker<Socket, Void> worker = new SwingWorker<Socket, Void>() {
 			@Override
 			public Socket doInBackground() {
@@ -85,9 +85,9 @@ public class WaitForOpponent extends JDialog {
 
 			@Override
 			public void done() {
-				Socket socket = null;
 				try {
-					socket = get();
+					Socket socket = get();
+					delegate.foundOpponent(socket);
 				} catch (InterruptedException | ExecutionException e) {
 					e.printStackTrace();
 				}

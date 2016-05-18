@@ -21,13 +21,16 @@ import javax.swing.SwingWorker;
 
 public class FindOpponent extends JDialog {
 	private static final long serialVersionUID = 1L;
+	
+	private OpponentFinderDelegate delegate;
 	private final Box box;
 	private final Box infoBox;
 	private final JLabel waitingLabel;
 	private final JLabel connectionFailedLabel;
 
-	FindOpponent(JFrame parent) {
+	FindOpponent(JFrame parent, OpponentFinderDelegate delegate) {
 		super(parent, true);
+		this.delegate = delegate;
 
 		box = new Box(BoxLayout.Y_AXIS);
 
@@ -122,6 +125,7 @@ public class FindOpponent extends JDialog {
 					infoBox.remove(connectionFailedLabel);
 					box.validate();
 					dialog.pack();
+					delegate.foundOpponent(socket);
 				}
 			}
 		};
