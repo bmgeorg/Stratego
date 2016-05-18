@@ -1,4 +1,4 @@
-package view;
+package setup;
 
 import java.net.Socket;
 

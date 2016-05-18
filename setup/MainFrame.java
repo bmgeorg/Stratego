@@ -1,4 +1,4 @@
-package view;
+package setup;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
