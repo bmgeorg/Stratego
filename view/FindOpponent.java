@@ -89,7 +89,10 @@ public class FindOpponent extends JDialog {
 			public void run() {
 				try {
 					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(ipAddress, 4005), 5000); 
+					final int PORT = 4005;
+					// Timeout in milliseconds
+					final int TIMEOUT = 5000;
+					socket.connect(new InetSocketAddress(ipAddress, PORT), TIMEOUT); 
 					System.out.println("Connected");
 				} catch (IOException e) {
 					System.out.println("Failed");		
