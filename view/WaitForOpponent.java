@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -42,12 +43,19 @@ public class WaitForOpponent extends JDialog {
 		ipLabel2.setMaximumSize(new Dimension(maxWidth, ipLabel2.getPreferredSize().height));
 		ipLabel2.setToolTipText(ipAddress);
 		
+		ImageIcon waitingIcon = new ImageIcon("src/loading.gif");
+		JLabel waitingLabel = new JLabel(waitingIcon);
+		
+		waitingLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		
 		Dimension separatorSize = new Dimension(200, 20);
 		
 		box.add(Box.createRigidArea(separatorSize));
 		box.add(ipLabel1);
 		box.add(Box.createRigidArea(separatorSize));
 		box.add(ipLabel2);
+		box.add(Box.createRigidArea(separatorSize));
+		box.add(waitingLabel);
 		box.add(Box.createRigidArea(separatorSize));
 
 		this.setResizable(false);

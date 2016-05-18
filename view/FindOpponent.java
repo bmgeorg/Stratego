@@ -51,22 +51,6 @@ public class FindOpponent extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		/*
-		String ipAddress;
-		try {
-			ipAddress = InetAddress.getLocalHost().getHostAddress();
-			//ipAddress = "12348823.12.34.1234.1j99238428931.123.412351235.123412235412.999";
-		} catch (UnknownHostException e) {
-			ipAddress = "unfound";
-		}
-		JLabel ipLabel1 = new JLabel("Your IP address");
-		JLabel ipLabel2 = new JLabel(ipAddress)
-
-		// Fuck this god-awful class Dimension. Why do they make it this hard?
-		int maxWidth = Math.min(200, ipLabel2.getPreferredSize().width);
-		ipLabel2.setMaximumSize(new Dimension(maxWidth, ipLabel2.getPreferredSize().height));
-		ipLabel2.setToolTipText(ipAddress);
-		*/
 
 		this.setResizable(false);
 		this.add(box);
