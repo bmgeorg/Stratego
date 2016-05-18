@@ -30,6 +30,10 @@ public class MainFrame extends JFrame {
 		box.add(Box.createRigidArea(separatorSize));
 		box.add(waitButton);
 		box.add(Box.createRigidArea(separatorSize));
+		
+		this.setResizable(false);
+		this.add(box);
+		this.pack();
 
 		// Need access to this for dialog ctors
 		final MainFrame mainFrame = this;
@@ -48,9 +52,5 @@ public class MainFrame extends JFrame {
 				waiter.setVisible(true);
 			} 
 		});
-
-		this.setResizable(false);
-		this.add(box);
-		this.pack();
 	}
 }

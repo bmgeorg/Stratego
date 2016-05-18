@@ -59,6 +59,10 @@ public class FindOpponent extends JDialog {
 		box.add(Box.createRigidArea(separatorSize));
 		box.add(infoBox);
 		box.add(Box.createRigidArea(separatorSize));
+		
+		this.setResizable(false);
+		this.add(box);
+		this.pack();
 
 		ipField.addActionListener(new ActionListener() {
 			@Override
@@ -72,10 +76,6 @@ public class FindOpponent extends JDialog {
 				searchForOpponent(ipField.getText());
 			}
 		});
-
-		this.setResizable(false);
-		this.add(box);
-		this.pack();
 	}
 
 	private void searchForOpponent(String ipAddress) {
