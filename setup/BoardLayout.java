@@ -23,7 +23,7 @@ public class BoardLayout extends JPanel {
 		//this.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
 		//this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-		Dimension size = new Dimension(86, 86);
+		Dimension size = new Dimension(70, 70);
 		for(int i = 0; i < 10; i++) {
 			for(int j = 0; j < 10; j++) {
 				cells[i][j] = new JLabel();
@@ -40,7 +40,7 @@ public class BoardLayout extends JPanel {
 		int row = y*10/this.getHeight();
 		int col = x*10/this.getWidth();
 
-		// If invalid placement, return null
+		// If invalid placement, return false
 		if(row < 6 || row > 9 || col < 0 || col > 9) {
 			return false;
 		}
