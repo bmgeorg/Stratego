@@ -18,6 +18,8 @@ public class BoardSetup extends JFrame implements CharacterPanelDelegate {
 	private JLayeredPane pane;
 	
 	private CharacterPanel panel;
+	private BoardLayout board;
+
 	private JLabel selectedCharacterImage = null;
 	private model.Type selectedCharacterType = null;
 	
@@ -27,12 +29,17 @@ public class BoardSetup extends JFrame implements CharacterPanelDelegate {
 	BoardSetup() {
 
 		pane = new JLayeredPane();
-		pane.setPreferredSize(new Dimension(500, 700));
+		pane.setPreferredSize(new Dimension(1100, 860));
 		
 		panel = new CharacterPanel(this);
+		Dimension panelSize = panel.getPreferredSize();
+		panel.setBounds(0, 0, panelSize.width, panelSize.height);
 		pane.add(panel);
-		Dimension size = panel.getPreferredSize();
-		panel.setBounds(0, 0, size.width, size.height);
+		
+		board = new BoardLayout();
+		Dimension boardSize = board.getPreferredSize();
+		board.setBounds(panelSize.width+20, 0, boardSize.width, boardSize.height);
+		pane.add(board);
 
 		this.setResizable(false);
 		this.add(pane);
@@ -56,7 +63,6 @@ public class BoardSetup extends JFrame implements CharacterPanelDelegate {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				if(selectedCharacterImage != null) {
-					
 					selectedCharacterImage.setLocation(e.getX()-offsetX, e.getY()-offsetY);
 				}
 			}

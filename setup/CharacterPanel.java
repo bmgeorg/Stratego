@@ -1,7 +1,6 @@
 package setup;
 
 import java.awt.GridLayout;
-import java.awt.Point;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
