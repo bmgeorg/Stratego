@@ -20,6 +20,9 @@ public class BoardSetup extends JFrame implements CharacterPanelDelegate {
 	private CharacterPanel panel;
 	private JLabel selectedCharacterImage = null;
 	private model.Type selectedCharacterType = null;
+	
+	private int offsetX = 0;
+	private int offsetY = 0;
 
 	BoardSetup() {
 
@@ -53,7 +56,8 @@ public class BoardSetup extends JFrame implements CharacterPanelDelegate {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				if(selectedCharacterImage != null) {
-					selectedCharacterImage.setLocation(e.getPoint());
+					
+					selectedCharacterImage.setLocation(e.getX()-offsetX, e.getY()-offsetY);
 				}
 			}
 		};
@@ -61,16 +65,18 @@ public class BoardSetup extends JFrame implements CharacterPanelDelegate {
 		pane.addMouseMotionListener(mouse);
 	}
 
-	public void characterSelected(ImageIcon image, model.Type type) {
+	public void characterSelected(ImageIcon image, model.Type type, int offsetX, int offsetY) {
 		System.out.println("Character selected " + type.toString());
 		selectedCharacterImage = new JLabel(image);
 		selectedCharacterType = type;
+		this.offsetX = offsetX;
+		this.offsetY = offsetY;
 
 		pane.add(selectedCharacterImage, JLayeredPane.DRAG_LAYER);
 
 		Point p = MouseInfo.getPointerInfo().getLocation();
-		SwingUtilities.convertPointFromScreen(p, this);
+		SwingUtilities.convertPointFromScreen(p, pane);
 		Dimension size = selectedCharacterImage.getPreferredSize();
-		selectedCharacterImage.setBounds(p.x, p.y, size.width, size.height);
+		selectedCharacterImage.setBounds(p.x-offsetX, p.y-offsetY, size.width, size.height);
 	}
 }

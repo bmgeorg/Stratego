@@ -1,8 +1,7 @@
 package setup;
 
 import java.awt.GridLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.Point;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -91,7 +90,9 @@ public class CharacterPanel extends JPanel {
 		}
 		Type type = types[row][col];
 		if(counts[type.ordinal()] > 0) {
-			delegate.characterSelected(images[type.ordinal()], type);
+			int offsetX = x - col*this.getWidth()/2;
+			int offsetY = y - row*this.getHeight()/6;
+			delegate.characterSelected(images[type.ordinal()], type, offsetX, offsetY);
 		}
 	}
 	
