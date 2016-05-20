@@ -54,6 +54,17 @@ public class BoardSetup extends JFrame implements CharacterPanelDelegate {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				if(selectedCharacterImage != null) {
+					Point p = SwingUtilities.convertPoint(pane, e.getPoint(), board);
+					model.Type replacedType = board.getCharacter(p.x, p.y);
+					boolean success = board.placeCharacter(selectedCharacterType,
+							selectedCharacterImage.getIcon(), p.x, p.y);
+					if(replacedType != null) {
+						panel.incrementCount(replacedType);
+					}
+					if(success) {
+						panel.decrementCount(selectedCharacterType);
+					}
+					
 					pane.remove(selectedCharacterImage);
 					selectedCharacterImage = null;
 					selectedCharacterType = null;
@@ -72,7 +83,6 @@ public class BoardSetup extends JFrame implements CharacterPanelDelegate {
 	}
 
 	public void characterSelected(ImageIcon image, model.Type type, int offsetX, int offsetY) {
-		System.out.println("Character selected " + type.toString());
 		selectedCharacterImage = new JLabel(image);
 		selectedCharacterType = type;
 		this.offsetX = offsetX;

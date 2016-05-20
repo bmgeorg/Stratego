@@ -81,6 +81,7 @@ public class CharacterPanel extends JPanel {
 		}
 	}
 	
+	// x and y are in CharacterPanel coordinate system
 	public void mousePressed(int x, int y) {
 		int row = y*6/this.getHeight();
 		int col = x*2/this.getWidth();
@@ -97,6 +98,11 @@ public class CharacterPanel extends JPanel {
 	
 	public void decrementCount(Type type) {
 		counts[type.ordinal()]--;
+		countLabels[type.ordinal()].setText(String.valueOf(counts[type.ordinal()]));
+	}
+	
+	public void incrementCount(Type type) {
+		counts[type.ordinal()]++;
 		countLabels[type.ordinal()].setText(String.valueOf(counts[type.ordinal()]));
 	}
 }
