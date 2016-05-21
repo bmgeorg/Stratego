@@ -14,7 +14,7 @@ import model.Type;
 public class CharacterPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	private CharacterPanelDelegate delegate;
+	private CharacterDragger delegate;
 	
 	private Type[][] types = new Type[6][2];
 	// All indexed by Type ordinal
@@ -22,7 +22,7 @@ public class CharacterPanel extends JPanel {
 	private int[] counts = new int[12];
 	private JLabel[] countLabels = new JLabel[12];
 
-	CharacterPanel(CharacterPanelDelegate delegate) {
+	CharacterPanel(CharacterDragger delegate) {
 		this.delegate = delegate;
 		
 		types[0][0] = Type.MARSHAL;
@@ -92,16 +92,13 @@ public class CharacterPanel extends JPanel {
 		if(counts[type.ordinal()] > 0) {
 			int offsetX = x - col*this.getWidth()/2;
 			int offsetY = y - row*this.getHeight()/6;
+			counts[type.ordinal()]--;
+			countLabels[type.ordinal()].setText(String.valueOf(counts[type.ordinal()]));
 			delegate.characterSelected(images[type.ordinal()], type, offsetX, offsetY);
 		}
 	}
 	
-	public void decrementCount(Type type) {
-		counts[type.ordinal()]--;
-		countLabels[type.ordinal()].setText(String.valueOf(counts[type.ordinal()]));
-	}
-	
-	public void incrementCount(Type type) {
+	public void returnCharacter(Type type) {
 		counts[type.ordinal()]++;
 		countLabels[type.ordinal()].setText(String.valueOf(counts[type.ordinal()]));
 	}

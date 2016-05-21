@@ -14,10 +14,14 @@ import model.Type;
 public class BoardLayout extends JPanel {
 	private static final long serialVersionUID = 1L;
 
-	private JLabel[][] cells = new JLabel[10][10];
-	private Type[][] characters = new Type[3][10];
+	private CharacterDragger delegate;
 
-	BoardLayout() {
+	private JLabel[][] cells = new JLabel[10][10];
+	private Type[][] characters = new Type[4][10];
+
+	BoardLayout(CharacterDragger delegate) {
+		this.delegate = delegate;
+
 		//Use -1 pixel vgap and hgap to allow borders of same width
 		this.setLayout(new GridLayout(10, 10, -1, -1));
 		//this.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
@@ -32,8 +36,10 @@ public class BoardLayout extends JPanel {
 				this.add(cells[i][j]);
 			}
 		}
+		
+		this.setBackground(Color.BLUE);
 	}
-	
+
 	// x and y are in BoardLayout coordinate system
 	// Returns true if placement is successful
 	boolean placeCharacter(Type character, Icon icon, int x, int y) {
@@ -44,12 +50,12 @@ public class BoardLayout extends JPanel {
 		if(row < 6 || row > 9 || col < 0 || col > 9) {
 			return false;
 		}
-		
+
 		characters[row-6][col] = character;
 		cells[row][col].setIcon(icon);
 		return true;
 	}
-	
+
 	// x and y are in BoardLayout coordinate system
 	Type getCharacter(int x, int y) {
 		int row = y*10/this.getHeight();
@@ -60,5 +66,23 @@ public class BoardLayout extends JPanel {
 			return null;
 		}
 		return characters[row-6][col];
+	}
+
+	// x and y are in BoardLayout coordinate system
+	void mousePressed(int x, int y) {
+		int row = y*10/this.getHeight();
+		int col = x*10/this.getWidth();
+		if(row < 6 || row > 9 || col < 0 || col > 9) {
+			return;
+		}
+		Type type = characters[row-6][col];
+		if(type != null) {
+			int offsetX = x - col*this.getWidth()/10;
+			int offsetY = y - row*this.getHeight()/10;
+			delegate.characterSelected(cells[row][col].getIcon(), type, offsetX, offsetY);
+			
+			characters[row-6][col] = null;
+			cells[row][col].setIcon(null);
+		}
 	}
 }
